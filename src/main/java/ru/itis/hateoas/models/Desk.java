@@ -10,13 +10,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @ToString(exclude = "place")
-@Table(name = "Desk")
+
 public class Desk {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "table_generator")
-    @SequenceGenerator(name = "table_generator", sequenceName = "table_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "desk_generator")
+    @SequenceGenerator(name = "desk_generator", sequenceName = "desk_seq")
     private Long id;
+
+    private Long number;
 
     @ManyToOne
     @JoinColumn(name = "place_id")

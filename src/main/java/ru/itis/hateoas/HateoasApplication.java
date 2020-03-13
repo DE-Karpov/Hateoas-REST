@@ -21,7 +21,7 @@ public class HateoasApplication {
         CustomersRepository customersRepository = context.getBean(CustomersRepository.class);
         DishesRepository dishesRepository = context.getBean(DishesRepository.class);
         PlacesRepository placesRepository = context.getBean(PlacesRepository.class);
-        TablesRepository tablesRepository = context.getBean(TablesRepository.class);
+        DesksRepository desksRepository = context.getBean(DesksRepository.class);
 
         Place beerHouse = Place.builder()
                 .name("Beer House")
@@ -46,21 +46,25 @@ public class HateoasApplication {
                 .build();
 
         Desk firstDeskInChernovar = Desk.builder()
+                .number(1L)
                 .place(chernovar)
                 .isReserved(false)
                 .build();
 
         Desk secondDeskInChernovar = Desk.builder()
+                .number(2L)
                 .place(chernovar)
                 .isReserved(false)
                 .build();
 
         Desk firstDeskInBeerHouse = Desk.builder()
+                .number(1L)
                 .place(beerHouse)
                 .isReserved(false)
                 .build();
 
         Desk secondDeskInBeerHouse = Desk.builder()
+                .number(2L)
                 .place(beerHouse)
                 .isReserved(true)
                 .build();
@@ -85,7 +89,7 @@ public class HateoasApplication {
 
         placesRepository.saveAll(asList(beerHouse, chernovar));
         customersRepository.saveAll(asList(marsel, salimov));
-        tablesRepository.saveAll(asList(
+        desksRepository.saveAll(asList(
                 firstDeskInBeerHouse,
                 secondDeskInBeerHouse,
                 firstDeskInChernovar,
