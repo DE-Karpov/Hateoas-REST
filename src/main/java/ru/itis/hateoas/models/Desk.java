@@ -10,7 +10,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @ToString(exclude = "place")
-
 public class Desk {
 
     @Id

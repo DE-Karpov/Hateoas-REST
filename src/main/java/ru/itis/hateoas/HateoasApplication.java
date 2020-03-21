@@ -3,13 +3,11 @@ package ru.itis.hateoas;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import ru.itis.hateoas.models.Customer;
-import ru.itis.hateoas.models.Dish;
-import ru.itis.hateoas.models.Place;
-import ru.itis.hateoas.models.Desk;
+import ru.itis.hateoas.models.*;
 import ru.itis.hateoas.repositories.*;
 
 import static java.util.Arrays.asList;
+import static org.hibernate.validator.internal.util.CollectionHelper.asSet;
 
 @SpringBootApplication
 public class HateoasApplication {
@@ -22,6 +20,7 @@ public class HateoasApplication {
         DishesRepository dishesRepository = context.getBean(DishesRepository.class);
         PlacesRepository placesRepository = context.getBean(PlacesRepository.class);
         DesksRepository desksRepository = context.getBean(DesksRepository.class);
+        MenusRepository menusRepository = context.getBean(MenusRepository.class);
 
         Place beerHouse = Place.builder()
                 .name("Beer House")
@@ -72,18 +71,25 @@ public class HateoasApplication {
         Dish friedChicken = Dish.builder()
                 .name("Fried chicken")
                 .cost(300L)
-                .place(chernovar)
                 .build();
 
         Dish frenchFries = Dish.builder()
                 .name("French fries")
                 .cost(100L)
-                .place(chernovar)
                 .build();
 
         Dish beer = Dish.builder()
                 .name("Beer")
                 .cost(120L)
+                .build();
+
+        Menu chernovarMenu = Menu.builder()
+                .dishes(asSet(frenchFries,friedChicken))
+                .place(chernovar)
+                .build();
+
+        Menu beerHouseMenu = Menu.builder()
+                .dishes(asSet(frenchFries,beer))
                 .place(beerHouse)
                 .build();
 
@@ -95,6 +101,7 @@ public class HateoasApplication {
                 firstDeskInChernovar,
                 secondDeskInChernovar));
         dishesRepository.saveAll(asList(friedChicken, frenchFries, beer));
+        menusRepository.saveAll(asList(chernovarMenu,beerHouseMenu));
     }
 
 }

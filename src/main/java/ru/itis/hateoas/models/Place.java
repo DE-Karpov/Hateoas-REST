@@ -21,8 +21,8 @@ public class Place {
     private String name;
     private Boolean isFull;
 
-    @OneToMany(mappedBy = "place")
-    private List<Dish> menu;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Menu menu;
 
     @OneToMany(mappedBy = "place")
     private List<Desk> desks;
