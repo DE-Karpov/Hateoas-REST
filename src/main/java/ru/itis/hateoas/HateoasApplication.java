@@ -52,18 +52,18 @@ public class HateoasApplication {
 
         placesRepository.saveAll(asList(beerHouse, chernovar));
 
-        val chern = placesRepository.findByName("Chernovar");
-        val bh = placesRepository.findByName("Beer House");
+        val chernovarFromRepo = placesRepository.findByName("Chernovar");
+        val beerHouseFromRepo = placesRepository.findByName("Beer House");
 
         Menu chernovarMenu = Menu.builder()
-                .id(placesRepository.findByName(chernovar.getName()).getId())
-                .place(chern)
+                .id(chernovarFromRepo.getId())
+                .place(chernovarFromRepo)
                 .dishes(asSet(frenchFries, friedChicken))
                 .build();
 
         Menu beerHouseMenu = Menu.builder()
-                .id(placesRepository.findByName(beerHouse.getName()).getId())
-                .place(bh)
+                .id(beerHouseFromRepo.getId())
+                .place(beerHouseFromRepo)
                 .dishes(asSet(frenchFries, beer))
                 .build();
 

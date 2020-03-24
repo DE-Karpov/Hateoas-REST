@@ -13,8 +13,7 @@ import javax.persistence.*;
 public class Desk {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "desk_generator")
-    @SequenceGenerator(name = "desk_generator", sequenceName = "desk_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

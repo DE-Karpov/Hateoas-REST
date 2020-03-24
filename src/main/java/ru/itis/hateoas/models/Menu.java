@@ -17,7 +17,6 @@ public class Menu {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
     @MapsId
     private Place place;
 
