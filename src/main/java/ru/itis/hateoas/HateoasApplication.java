@@ -1,5 +1,6 @@
 package ru.itis.hateoas;
 
+import lombok.val;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -22,52 +23,6 @@ public class HateoasApplication {
         DesksRepository desksRepository = context.getBean(DesksRepository.class);
         MenusRepository menusRepository = context.getBean(MenusRepository.class);
 
-        Place beerHouse = Place.builder()
-                .name("Beer House")
-                .isFull(false)
-                .build();
-
-        Place chernovar = Place.builder()
-                .name("Chernovar")
-                .isFull(false)
-                .build();
-
-        Customer marsel = Customer.builder()
-                .firstName("Марсель")
-                .lastName("Сидиков")
-                .place(beerHouse)
-                .build();
-
-        Customer salimov = Customer.builder()
-                .firstName("Фарид")
-                .lastName("Салимов")
-                .place(chernovar)
-                .build();
-
-        Desk firstDeskInChernovar = Desk.builder()
-                .number(1L)
-                .place(chernovar)
-                .isReserved(false)
-                .build();
-
-        Desk secondDeskInChernovar = Desk.builder()
-                .number(2L)
-                .place(chernovar)
-                .isReserved(false)
-                .build();
-
-        Desk firstDeskInBeerHouse = Desk.builder()
-                .number(1L)
-                .place(beerHouse)
-                .isReserved(false)
-                .build();
-
-        Desk secondDeskInBeerHouse = Desk.builder()
-                .number(2L)
-                .place(beerHouse)
-                .isReserved(true)
-                .build();
-
         Dish friedChicken = Dish.builder()
                 .name("Fried chicken")
                 .cost(300L)
@@ -83,25 +38,75 @@ public class HateoasApplication {
                 .cost(120L)
                 .build();
 
-        Menu chernovarMenu = Menu.builder()
-                .dishes(asSet(frenchFries,friedChicken))
-                .place(chernovar)
+        dishesRepository.saveAll(asList(friedChicken, frenchFries, beer));
+
+        Place beerHouse = Place.builder()
+                .name("Beer House")
+                .isFull(false)
                 .build();
 
-        Menu beerHouseMenu = Menu.builder()
-                .dishes(asSet(frenchFries,beer))
-                .place(beerHouse)
+        Place chernovar = Place.builder()
+                .name("Chernovar")
+                .isFull(false)
                 .build();
 
         placesRepository.saveAll(asList(beerHouse, chernovar));
+
+        val chern = placesRepository.findByName("Chernovar");
+        val bh = placesRepository.findByName("Beer House");
+
+        Menu chernovarMenu = Menu.builder()
+                .id(placesRepository.findByName(chernovar.getName()).getId())
+                .place(chern)
+                .dishes(asSet(frenchFries, friedChicken))
+                .build();
+
+        Menu beerHouseMenu = Menu.builder()
+                .id(placesRepository.findByName(beerHouse.getName()).getId())
+                .place(bh)
+                .dishes(asSet(frenchFries, beer))
+                .build();
+
+        menusRepository.saveAll(asList(chernovarMenu, beerHouseMenu));
+
+        Customer marsel = Customer.builder()
+                .firstName("Марсель")
+                .lastName("Сидиков")
+                .place(beerHouse)
+                .build();
+
+        Customer salimov = Customer.builder()
+                .firstName("Фарид")
+                .lastName("Салимов")
+                .place(chernovar)
+                .build();
+
+        Desk firstDeskInChernovar = Desk.builder()
+                .place(chernovar)
+                .isReserved(false)
+                .build();
+
+        Desk secondDeskInChernovar = Desk.builder()
+                .place(chernovar)
+                .isReserved(false)
+                .build();
+
+        Desk firstDeskInBeerHouse = Desk.builder()
+                .place(beerHouse)
+                .isReserved(false)
+                .build();
+
+        Desk secondDeskInBeerHouse = Desk.builder()
+                .place(beerHouse)
+                .isReserved(true)
+                .build();
+
         customersRepository.saveAll(asList(marsel, salimov));
         desksRepository.saveAll(asList(
                 firstDeskInBeerHouse,
                 secondDeskInBeerHouse,
                 firstDeskInChernovar,
                 secondDeskInChernovar));
-        dishesRepository.saveAll(asList(friedChicken, frenchFries, beer));
-        menusRepository.saveAll(asList(chernovarMenu,beerHouseMenu));
     }
 
 }

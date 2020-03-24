@@ -1,0 +1,24 @@
+= Описание API по столам
+
+== Методы
+
+|===
+|Метод | Назначение
+|`PUT`|Обновить сущность или её состояние
+|===
+
+=== Бронировать стол
+
+Можно забронировать стол с состоянием *false*
+
+.request
+
+include::{snippets}/reserve_desk/http-request.adoc[]
+
+.response
+
+include::{snippets}/reserve_desk/http-response.adoc[]
+
+.response-fields
+
+include::{snippets}/reserve_desk/response-fields.adoc[]

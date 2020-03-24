@@ -13,8 +13,8 @@ import java.util.Optional;
 @RepositoryRestResource
 public interface DesksRepository extends PagingAndSortingRepository<Desk, Long> {
 
-    @Query("from Desk desk where desk.place.id = ?1 and desk.number = ?2")
-    Optional<Desk> findByPlaceIdAndNumber(Long placeId, Long number);
+    @Query("from Desk desk where desk.place.id = ?1 and desk.id = ?2")
+    Optional<Desk> findByPlaceIdAndNumber(Long placeId, Long id);
 
     @RestResource(path = "reserved", rel = "findAllReserved")
     @Query("from Desk desk where desk.isReserved = true ")

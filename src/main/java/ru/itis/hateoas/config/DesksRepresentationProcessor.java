@@ -25,9 +25,9 @@ public class DesksRepresentationProcessor implements RepresentationModelProcesso
     public EntityModel<Desk> process(EntityModel<Desk> model) {
         Desk desk = model.getContent();
         if (desk != null && !desk.getIsReserved()) {
-            model.add(linkTo(methodOn(CustomReserveController.class).reserve(
-                    desk.getPlace().getId(),
-                    desk.getId())).withRel("reserve"));
+            model.add(linkTo(methodOn(CustomReserveController.class)
+                    .reserve(desk.getPlace().getId(), desk.getId()))
+                    .withRel("reserve"));
         }
         return model;
     }

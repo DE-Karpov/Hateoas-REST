@@ -14,11 +14,11 @@ import java.util.Set;
 public class Menu {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "menu_generator")
-    @SequenceGenerator(name = "menu_generator", sequenceName = "menu_seq")
     private Long id;
 
-    @OneToOne(mappedBy = "menu")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    @MapsId
     private Place place;
 
     @ManyToMany
@@ -28,7 +28,7 @@ public class Menu {
             inverseJoinColumns = @JoinColumn(name = "dish_id"))
     private Set<Dish> dishes;
 
-    public void addDish(Dish dish){
+    public void addDish(Dish dish) {
         dish.getMenus().add(this);
         this.dishes.add(dish);
     }

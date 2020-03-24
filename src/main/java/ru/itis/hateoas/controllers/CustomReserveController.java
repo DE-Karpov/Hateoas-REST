@@ -17,12 +17,12 @@ public class CustomReserveController {
         this.reserveService = reserveService;
     }
 
-    @PutMapping("/places/{place-id}/desks/{desk-number}/reserve")
+    @PutMapping("/places/{place-id}/desks/{desk-id}/reserve")
     public @ResponseBody
     ResponseEntity<?> reserve(@PathVariable("place-id") final Long placeId,
-                              @PathVariable("desk-number") final Long deskNumber) {
+                              @PathVariable("desk-id") final Long deskId) {
         return ResponseEntity.ok(
                 new EntityModel<>(
-                        reserveService.reserve(placeId, deskNumber)));
+                        reserveService.reserve(placeId, deskId)));
     }
 }

@@ -17,8 +17,6 @@ public class Desk {
     @SequenceGenerator(name = "desk_generator", sequenceName = "desk_seq")
     private Long id;
 
-    private Long number;
-
     @ManyToOne
     @JoinColumn(name = "place_id")
     private Place place;
@@ -26,6 +24,9 @@ public class Desk {
     private Boolean isReserved;
 
     public void reserve() {
+        if (isReserved){
+            throw new IllegalArgumentException();
+        }
         isReserved = true;
     }
 }

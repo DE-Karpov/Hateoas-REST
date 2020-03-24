@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"customer", "desks", "menu"})
+@ToString(exclude = {"customer", "desks"})
 public class Place {
 
     @Id
@@ -22,6 +22,7 @@ public class Place {
     private Boolean isFull;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private Menu menu;
 
     @OneToMany(mappedBy = "place")
