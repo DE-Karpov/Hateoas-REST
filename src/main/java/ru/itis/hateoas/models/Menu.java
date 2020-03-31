@@ -3,7 +3,6 @@ package ru.itis.hateoas.models;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,8 +15,8 @@ public class Menu {
     @Id
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
+    @OneToOne(fetch = FetchType.LAZY)
     private Place place;
 
     @ManyToMany

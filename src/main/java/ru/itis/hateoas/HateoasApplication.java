@@ -52,8 +52,8 @@ public class HateoasApplication {
 
         placesRepository.saveAll(asList(beerHouse, chernovar));
 
-        val chernovarFromRepo = placesRepository.findByName("Chernovar");
-        val beerHouseFromRepo = placesRepository.findByName("Beer House");
+            val chernovarFromRepo = placesRepository.findByName("Chernovar").get();
+            val beerHouseFromRepo = placesRepository.findByName("Beer House").get();
 
         Menu chernovarMenu = Menu.builder()
                 .id(chernovarFromRepo.getId())

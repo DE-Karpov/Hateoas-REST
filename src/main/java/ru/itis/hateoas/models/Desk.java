@@ -23,7 +23,7 @@ public class Desk {
     private Boolean isReserved;
 
     public void reserve() {
-        if (isReserved){
+        if (isReserved) {
             throw new IllegalArgumentException();
         }
         isReserved = true;

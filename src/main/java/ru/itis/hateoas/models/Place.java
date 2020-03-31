@@ -30,11 +30,13 @@ public class Place {
     @OneToMany(mappedBy = "place")
     private List<Customer> customer;
 
-    public boolean isFull() {
+    public void isFull() {
         for (Desk desk : desks) {
-            if (!desk.getIsReserved())
-                return this.isFull = false;
+            if (!desk.getIsReserved()) {
+                this.isFull = false;
+                return;
+            }
         }
-        return this.isFull = true;
+        this.isFull = true;
     }
 }

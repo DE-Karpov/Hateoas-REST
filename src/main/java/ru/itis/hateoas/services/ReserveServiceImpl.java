@@ -20,8 +20,8 @@ public class ReserveServiceImpl implements ReserveService {
     }
 
     @Override
-    public Desk reserve(final Long placeId, final Long deskNumber) {
-        val desk = desksRepository.findByPlaceIdAndNumber(placeId, deskNumber).orElseThrow(IllegalArgumentException::new);
+    public Desk reserve(final Long placeId, final Long deskId) {
+        val desk = desksRepository.findByPlaceIdAndNumber(placeId, deskId).orElseThrow(IllegalArgumentException::new);
         val place = desk.getPlace();
         desk.reserve();
         place.isFull();
