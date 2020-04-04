@@ -28,4 +28,11 @@ public class Desk {
         }
         isReserved = true;
     }
+
+    public void deReserve() {
+        if (!isReserved) {
+            throw new IllegalArgumentException();
+        }
+        isReserved = false;
+    }
 }

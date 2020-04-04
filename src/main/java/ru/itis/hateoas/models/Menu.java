@@ -28,6 +28,11 @@ public class Menu {
 
     public void addDish(Dish dish) {
         dish.getMenus().add(this);
-        this.dishes.add(dish);
+        this.getDishes().add(dish);
+    }
+
+    public void removeDish(Dish dish) {
+        this.getDishes().remove(dish);
+        dish.getMenus().remove(this);
     }
 }
