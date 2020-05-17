@@ -1,0 +1,32 @@
+server:
+  port: 100
+
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        jdbc:
+          lab:
+            non_contextual_creation: true
+  application:
+    name: 'desk-service'
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/javalab'
+    driver-class-name: org.postgresql.Driver
+    username: 'postgres'
+    password: 'dek-IT2077'
+
+eureka:
+  client:
+    service-url:
+      defaultZone: 'http://localhost:9000/eureka'
+  instance:
+    prefer-ip-address: true
+
+restaurants:
+  get:
+    request:
+      url: 'http://localhost:80/restaurant-management/records'

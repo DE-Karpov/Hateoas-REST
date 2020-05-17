@@ -3,15 +3,25 @@ package ru.itis.hateoas;
 import lombok.val;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 import ru.itis.hateoas.models.*;
 import ru.itis.hateoas.repositories.*;
+
 
 import static java.util.Arrays.asList;
 import static org.hibernate.validator.internal.util.CollectionHelper.asSet;
 
 @SpringBootApplication
+@EnableEurekaClient
 public class HateoasApplication {
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
     public static void main(String[] args) {
 
