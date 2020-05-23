@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.itis.hateoas.models.Desk;
 import ru.itis.hateoas.models.Place;
-import ru.itis.hateoas.services.ReserveService;
+import ru.itis.hateoas.services.ReserveServiceProducer;
 
 
 import static org.mockito.Mockito.when;
@@ -34,11 +34,11 @@ class HateoasApplicationTests {
     private MockMvc mockMvc;
 
     @MockBean
-    private ReserveService reserveService;
+    private ReserveServiceProducer reserveServiceProducer;
 
     @BeforeEach
     public void setUp() {
-        when(reserveService.reserve(1L, 1L)).thenReturn(reservedDesk());
+//        when(reserveServiceProducer.reserve(1L, 1L)).thenReturn(reservedDesk());
     }
 
     private Desk reservedDesk() {

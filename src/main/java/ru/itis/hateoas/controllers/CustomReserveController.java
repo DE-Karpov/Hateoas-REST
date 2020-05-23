@@ -2,27 +2,24 @@ package ru.itis.hateoas.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.itis.hateoas.services.ReserveService;
+import ru.itis.hateoas.services.ReserveServiceProducer;
 
 @RepositoryRestController
 public class CustomReserveController {
 
-    private final ReserveService reserveService;
+    private final ReserveServiceProducer reserveServiceProducer;
 
     @Autowired
-    public CustomReserveController(ReserveService reserveService) {
-        this.reserveService = reserveService;
+    public CustomReserveController(ReserveServiceProducer reserveServiceProducer) {
+        this.reserveServiceProducer = reserveServiceProducer;
     }
 
     @PutMapping("/places/{place-id}/desks/{desk-id}/reserve")
     public @ResponseBody
-    ResponseEntity<?> reserve(@PathVariable("place-id") final Long placeId,
+    CharSequence reserve(@PathVariable("place-id") final Long placeId,
                               @PathVariable("desk-id") final Long deskId) {
-        return ResponseEntity.ok(
-                new EntityModel<>(
-                        reserveService.reserve(placeId, deskId)));
+        reserveServiceProducer.reserve(placeId, deskId);
+        return "Message published";
     }
 }

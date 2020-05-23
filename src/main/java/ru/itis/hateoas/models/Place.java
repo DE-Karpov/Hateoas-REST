@@ -24,7 +24,7 @@ public class Place {
     @PrimaryKeyJoinColumn
     private Menu menu;
 
-    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Desk> desks;
 
     @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
