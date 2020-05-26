@@ -1,45 +1,35 @@
 package ru.itis.hateoas.services;
 
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
+import ru.itis.hateoas.models.Desk;
 
 @Service
+@Slf4j
 public class ReserveServiceProducerImpl implements ReserveServiceProducer {
 
-    private final static String EXCHANGE_TYPE = "fanout";
-    private static final String EXCHANGE_NAME = "messages";
-    private static final String QUEUE_1 = "queue_1";
+    private final AmqpTemplate rabbitTemplate;
+
+    @Value("${rabbitmq.routingkey1}")
+    private String ROUTING_KEY;
+
+    @Value("${rabbitmq.exchange}")
+    private String EXCHANGE_NAME;
+
+    @Autowired
+    public ReserveServiceProducerImpl(AmqpTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     @Override
     public void reserve(final Long placeId, final Long deskId) {
-
-        try {
-            ConnectionFactory factory = new ConnectionFactory();
-            factory.setHost("localhost");
-            Connection connection = factory.newConnection();
-            Channel channel = connection.createChannel();
-            channel.basicQos(3);
-
-            channel.exchangeDeclare(EXCHANGE_NAME, EXCHANGE_TYPE,true);
-
-            String message = getString(placeId, deskId);
-
-            channel.basicPublish(EXCHANGE_NAME, QUEUE_1, null, message.getBytes());
-
-            channel.close();
-            connection.close();
-        } catch (IOException io) {
-            System.out.println("IOException");
-            io.printStackTrace();
-        } catch (TimeoutException toe) {
-            System.out.println("TimeoutException : " + toe.getMessage());
-            toe.printStackTrace();
-        }
+        String message = getString(placeId, deskId);
+        log.info("[MESSAGE SENDER] Message will be sent with object to consumer");
+        log.info("[MESSAGE SENDER] Object: " + message);
+        rabbitTemplate.convertAndSend(EXCHANGE_NAME,ROUTING_KEY, message);
     }
 
     private String getString(final Long placeId, final Long deskId){

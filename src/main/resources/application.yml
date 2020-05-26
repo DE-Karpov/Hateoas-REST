@@ -2,6 +2,8 @@ server:
   port: 100
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   jpa:
     show-sql: true
     hibernate:
@@ -30,3 +32,8 @@ restaurants:
   get:
     request:
       url: 'http://localhost:80/restaurant-management/records'
+
+rabbitmq:
+  routingkey1: 'sending_message_about_reserve'
+  exchange: 'messages'
+  queue1: 'queue_1'
