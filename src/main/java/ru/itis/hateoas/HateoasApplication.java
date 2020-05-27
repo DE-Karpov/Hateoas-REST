@@ -10,7 +10,6 @@ import org.springframework.web.client.RestTemplate;
 import ru.itis.hateoas.models.*;
 import ru.itis.hateoas.repositories.*;
 
-
 import static java.util.Arrays.asList;
 import static org.hibernate.validator.internal.util.CollectionHelper.asSet;
 

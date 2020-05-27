@@ -1,5 +1,6 @@
 package ru.itis.hateoas.services;
 
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import ru.itis.hateoas.repositories.DesksRepository;
 import ru.itis.hateoas.repositories.PlacesRepository;
 
 @Service
+@Slf4j
 public class ReserveServiceConsumerImpl implements ReserveServiceConsumer {
 
     private final DesksRepository desksRepository;
@@ -22,6 +24,7 @@ public class ReserveServiceConsumerImpl implements ReserveServiceConsumer {
     @Override
     @RabbitListener(queues = "queue_1")
     public void reserve(String data) {
+        log.info("[RESERVE] Received message with params [{}] from [{}]", data, "queue_1");
         Long placeId = Long.valueOf(data.split(" ")[0]);
         Long deskId = Long.valueOf(data.split(" ")[1]);
         val desk = desksRepository.findByPlaceIdAndNumber(placeId, deskId).orElseThrow(IllegalArgumentException::new);
@@ -30,6 +33,5 @@ public class ReserveServiceConsumerImpl implements ReserveServiceConsumer {
         place.isFull();
         desksRepository.save(desk);
         placesRepository.save(place);
-
     }
 }
